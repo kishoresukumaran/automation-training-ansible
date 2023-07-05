@@ -17,8 +17,8 @@ DEVICE_IPS = ['192.168.0.10',
               ]
               
 # USE YOUR CREDENTIALS
-USERNAME = ''
-PASSWORD = ''
+USERNAME = 'arista'
+PASSWORD = 'arista0ob7'
 
 if __name__ == '__main__':
     payload = {'jsonrpc': '2.0',
@@ -39,14 +39,17 @@ if __name__ == '__main__':
     for device in DEVICE_IPS:
         r = requests.post('https://{}:443/command-api'.format(device), json=payload, auth=(USERNAME, PASSWORD), verify=False)
         response = r.json()
-        #pp.pprint(response)
+        # pp.pprint(response)
         serialNumber = response['result'][0]['serialNumber']
         hostname = response['result'][1]['hostname']
         eos = response['result'][0]['version']
+        architecture = response['result'][0]['architecture']
         device_outputs[hostname] = {'serial': serialNumber}
         device_outputs[hostname]['eos'] = eos
+        device_outputs[hostname]['arch'] = architecture
+        pp.pprint(device_outputs)
         # TODO: Add the architecture of EOS from the 'show version' output to the 'device_outputs' dictionary so that 
         # the info can be used in the jinja template
     else:
         pp.pprint(device_outputs)
-        print(template.render(devices=device_outputs))
+        print(template.render(devices=device_outputs)) 
