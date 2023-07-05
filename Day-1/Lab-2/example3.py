@@ -15,8 +15,8 @@ DEVICE_IPS = ['192.168.0.10',
               ]
            
 # USE YOUR CREDENTIALS
-USERNAME = ''
-PASSWORD = ''
+USERNAME = 'arista'
+PASSWORD = 'arista0ob7'
 
 if __name__ == '__main__':
     payload = {'jsonrpc': '2.0',
@@ -43,5 +43,5 @@ if __name__ == '__main__':
         device_outputs[hostname] = {}
         device_outputs[hostname]['lldpNeighbors'] = lldp_neighbors
     else:
-        pp.pprint(device_outputs)
+        #pp.pprint(device_outputs)
         print(template.render(devices=device_outputs))
