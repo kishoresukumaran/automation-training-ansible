@@ -1,7 +1,10 @@
 {{ devices | length }} devices contacted in total
 -------------------------------------------------
 {% for device in devices %}
-  {{ device }} (serial number <TO-COMPLETE>)
+  {{ device }} (serial number {{ devices[device].serial}})
+  Total of {{ devices[device].arpCount}} entries found in ARP table
+  - {{ devices[device].arpResp[0].address}} (MAC {{ devices[device].arpResp[0].hwAddress }}) learned on {{ devices[device].arpResp[0].interface}}
+  - {{ devices[device].arpResp[1].address}} (MAC {{ devices[device].arpResp[1].hwAddress }}) learned on {{ devices[device].arpResp[1].interface}}
 {#}
 Note that you might encounter additional line spacing that you do not expect when using for loops and other control logic in Jinja, depending on your environment settings.
 To avoid this, you can use - at the end of your control tags to prevent those lines from creating blank lines, like so:

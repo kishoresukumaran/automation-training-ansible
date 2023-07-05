@@ -17,8 +17,8 @@ DEVICE_IPS = ['192.168.0.10',
               ]
               
 # TODO: USE YOUR CREDENTIALS
-USERNAME = ''
-PASSWORD = ''
+USERNAME = 'arista'
+PASSWORD = 'arista0ob7'
 
 if __name__ == '__main__':
     payload = {'jsonrpc': '2.0',
@@ -42,17 +42,21 @@ if __name__ == '__main__':
         r = requests.post('https://{}:443/command-api'.format(device), json=payload, auth=(USERNAME, PASSWORD), verify=False)
         response = r.json()
         # TODO: Un-comment this print command for checking the response received
-        # pp.pprint(response)
+        #pp.pprint(response)
 
         serialNumber = response['result'][0]['serialNumber']
         hostname = response['result'][1]['hostname']
+        countArp = response['result'][2]['dynamicEntries']
+
         # TODO: Store the ARP information in a variable
-        # arp_table = ...
+        arp = response['result'][2]['ipV4Neighbors']
 
         # Here, we add an entry for each device in the dictionary 'device_outputs'
         # TODO: Add the ARP information to the dictionary 'device_outputs' so that info can be used in the jinja template
         device_outputs[hostname] = {'serial': serialNumber}
+        device_outputs[hostname]['arpCount'] = countArp
+        device_outputs[hostname]['arpResp']= arp
 
     else:
-        pp.pprint(device_outputs)
+        #pp.pprint(device_outputs)
         print(template.render(devices=device_outputs))
