@@ -9,8 +9,8 @@ urllib3.disable_warnings()
 CVP_IP = "192.168.0.5"
               
 # TODO: USE YOUR CREDENTIALS
-USERNAME = ''
-PASSWORD = ''
+USERNAME = 'arista'
+PASSWORD = 'arista0ob7'
 
 if __name__ == '__main__':
     pp = PrettyPrinter()
@@ -25,16 +25,18 @@ if __name__ == '__main__':
     s.cookies.set("access_token", access_token)
 
     # TODO: Change 'imageurl' to the actual endpoint you find in the REST API explorer
-    r = s.get('https://{}/imageurl'.format(CVP_IP))
+    r = s.get('https://{}/cvpservice/image/getImages.do?startIndex=0&endIndex=0'.format(CVP_IP))
     response = r.json()
     # TODO: Store the result in a variable
-    # images = ...
-    
+    images = response['data']
+    #pp.pprint(images)
+
     # TODO: Change 'containerurl' to the actual endpoint you find in the REST API explorer
-    r = s.get('https://{}/containerurl'.format(CVP_IP))
+    r = s.get('https://{}/cvpservice/inventory/containers'.format(CVP_IP))
     response = r.json()
     # TODO: Store the result in a variable
-    # containers = ...
+    #pp.pprint(response)
+    containers = response
 
 
     # Pass the data you collected above to the jinja tempalte
